@@ -8,6 +8,7 @@ export default function Register() {
   const router = useRouter();
   const [formData, setFormData] = useState({
     user: "",
+    email:"",
     password: "",
     password2: "",
   });
@@ -15,7 +16,7 @@ export default function Register() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const { user, password, password2 } = formData;
+    const { user, email, password, password2 } = formData;
 
     if (password !== password2) {
       setWarning("Passwords do not match");
@@ -23,7 +24,7 @@ export default function Register() {
     }
 
     try {
-      await registerUser(user, password, password2);
+      await registerUser(user, email, password, password2);
       router.push("/login");
     } catch (err) {
       setWarning(err.message);
@@ -52,6 +53,16 @@ export default function Register() {
             type="text"
             name="user"
             value={formData.user}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <br />
+        <Form.Group>
+          <Form.Label>Email:</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleInputChange}
           />
         </Form.Group>
